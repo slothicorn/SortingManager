@@ -26,6 +26,7 @@ valueContainer.innerHTML = valueEls;
 
 // Sorting Field HTML
 const sortingArray = [];
+let orderedArray = sortingArray;
 
 for (let i = 1; i < 11; i++) {
   sortingArray.push({
@@ -69,6 +70,7 @@ mixButton.addEventListener("click", () => {
   for (let i = 0; i < 100; i++) {
     const firstSelected =
       sortingArray[Math.floor(Math.random() * sortingArray.length)];
+
     let secondSelected =
       sortingArray[Math.floor(Math.random() * sortingArray.length)];
 
@@ -78,10 +80,57 @@ mixButton.addEventListener("click", () => {
     }
 
     const orderPlaceholder = firstSelected.currentOrder;
+
     firstSelected.currentOrder = secondSelected.currentOrder;
     secondSelected.currentOrder = orderPlaceholder;
 
     firstSelected.DOMElement.style.gridColumn = `${firstSelected.currentOrder}`;
     secondSelected.DOMElement.style.gridColumn = `${secondSelected.currentOrder}`;
   }
+
+  orderedArray = orderedArray.sort((x, y) =>
+    x.currentOrder > y.currentOrder
+      ? 1
+      : x.currentOrder < y.currentOrder
+      ? -1
+      : 0
+  );
+  console.log(orderedArray);
+});
+
+// BUBBLE SORT
+
+const sortButton = document.querySelector('[data-button="sort"]');
+
+const bubbleSort = () => {
+  for (let i = 0; i < orderedArray.length - 1; i++) {
+    for (let j = 0; j < orderedArray.length - 1 - i; j++) {
+      if (orderedArray[j].value > orderedArray[j + 1].value) {
+        [orderedArray[j], orderedArray[j + 1]] = [
+          orderedArray[j + 1],
+          orderedArray[j],
+        ];
+
+        // orderedArray[j].DOMElement.style.grjdColumn = `${
+        //   orderedArray[j + 1].id
+        // }`;
+        // orderedArray[
+        //   j + 1
+        // ].DOMElement.style.gridColumn = `${orderedArray[i].id}`;
+      }
+    }
+  }
+};
+
+sortButton.addEventListener("click", () => {
+  //   orderedArray = orderedArray.sort((x, y) =>
+  //     x.currentOrder > y.currentOrder
+  //       ? 1
+  //       : x.currentOrder < y.currentOrder
+  //       ? -1
+  //       : 0
+  //   );
+  console.log(orderedArray);
+
+  bubbleSort();
 });
