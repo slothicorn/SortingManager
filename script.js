@@ -102,9 +102,18 @@ mixButton.addEventListener("click", () => {
 
 const sortButton = document.querySelector('[data-button="sort"]');
 
-const bubbleSort = () => {
+function waitforme(ms) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("");
+    }, ms);
+  });
+}
+
+async function bubbleSort() {
   for (let i = 0; i < orderedArray.length - 1; i++) {
     for (let j = 0; j < orderedArray.length - 1 - i; j++) {
+      //while if, tak do {razeni currentorder a DOMElement}???
       if (orderedArray[j].value > orderedArray[j + 1].value) {
         [orderedArray[j], orderedArray[j + 1]] = [
           orderedArray[j + 1],
@@ -118,9 +127,11 @@ const bubbleSort = () => {
         //   j + 1
         // ].DOMElement.style.gridColumn = `${orderedArray[i].id}`;
       }
+      await waitforme(2000);
+      console.log(i);
     }
   }
-};
+}
 
 sortButton.addEventListener("click", () => {
   //   orderedArray = orderedArray.sort((x, y) =>
