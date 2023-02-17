@@ -1,32 +1,31 @@
-const mainContainer = document.getElementById("app");
+const mainContainer = document.getElementById('app')
 
 // Buttons HTML
-const buttonArray = ["mix", "sort", "reset"];
+const buttonArray = ['mix', 'sort', 'reset']
 const buttonEls = buttonArray
   .map(
     (button) =>
-      `<button data-button="${button}" class=buttons__button>${button}</button>`
+      `<button data-button="${button}" class=buttons__button>${button}</button>`,
   )
-  .join("");
+  .join('')
 
-const buttonsContainer = document.getElementById("buttons");
-buttonsContainer.innerHTML = buttonEls;
+const buttonsContainer = document.getElementById('buttons')
+buttonsContainer.innerHTML = buttonEls
 
 // Value Output HTML
-const valueArray = ["steps", "time"];
+const valueArray = ['steps', 'time']
 const valueEls = valueArray
   .map(
     (value) =>
-      `<div data-value${value} class=value-outputs__output>${value}</div>`
+      `<div data-value${value} class=value-outputs__output>${value}</div>`,
   )
-  .join("");
+  .join('')
 
-const valueContainer = document.getElementById("value-output");
-valueContainer.innerHTML = valueEls;
+const valueContainer = document.getElementById('value-output')
+valueContainer.innerHTML = valueEls
 
 // Sorting Field HTML
-const sortingArray = [];
-let orderedArray = sortingArray;
+const sortingArray = []
 
 for (let i = 1; i < 11; i++) {
   sortingArray.push({
@@ -34,114 +33,107 @@ for (let i = 1; i < 11; i++) {
     value: i,
     currentOrder: i,
     DOMElement: null,
-  });
+  })
 }
 
-const maxValue = sortingArray.length;
+const maxValue = sortingArray.length
 
 sortingEls = sortingArray
   .map(
     (
-      item
+      item,
     ) => `<div class='sorting-column sorting-columns__column' style=grid-column:${
       item.currentOrder
-    } data-id=${item.id}>					
+    } data-id=${item.id}>
 <div class=sorting-column__inner style=height:${
       (item.value / maxValue) * 100
     }%;></div>
 </div>
-`
+`,
   )
-  .join("");
+  .join('')
 
-const columnCount = sortingArray.length;
-const sortingContainer = document.getElementById("sorting-field");
-sortingContainer.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
-sortingContainer.innerHTML = sortingEls;
+const columnCount = sortingArray.length
+const sortingContainer = document.getElementById('sorting-field')
+sortingContainer.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`
+sortingContainer.innerHTML = sortingEls
 
 sortingArray.forEach((element) => {
-  element.DOMElement = document.querySelector(`[data-id="${element.id}"]`);
-});
+  element.DOMElement = document.querySelector(`[data-id="${element.id}"]`)
+})
 
 //MICHANI SLOUPECKU
-const mixButton = document.querySelector('[data-button="mix"]');
+const mixButton = document.querySelector('[data-button="mix"]')
 
-mixButton.addEventListener("click", () => {
+mixButton.addEventListener('click', () => {
   for (let i = 0; i < 100; i++) {
     const firstSelected =
-      sortingArray[Math.floor(Math.random() * sortingArray.length)];
+      sortingArray[Math.floor(Math.random() * sortingArray.length)]
 
     let secondSelected =
-      sortingArray[Math.floor(Math.random() * sortingArray.length)];
+      sortingArray[Math.floor(Math.random() * sortingArray.length)]
 
     while (firstSelected === secondSelected) {
       secondSelected =
-        sortingArray[Math.floor(Math.random() * sortingArray.length)];
+        sortingArray[Math.floor(Math.random() * sortingArray.length)]
     }
 
-    const orderPlaceholder = firstSelected.currentOrder;
+    const orderPlaceholder = firstSelected.currentOrder
 
-    firstSelected.currentOrder = secondSelected.currentOrder;
-    secondSelected.currentOrder = orderPlaceholder;
+    firstSelected.currentOrder = secondSelected.currentOrder
+    secondSelected.currentOrder = orderPlaceholder
 
-    firstSelected.DOMElement.style.gridColumn = `${firstSelected.currentOrder}`;
-    secondSelected.DOMElement.style.gridColumn = `${secondSelected.currentOrder}`;
+    firstSelected.DOMElement.style.gridColumn = `${firstSelected.currentOrder}`
+    secondSelected.DOMElement.style.gridColumn = `${secondSelected.currentOrder}`
   }
 
-  orderedArray = orderedArray.sort((x, y) =>
+  sortingArray.sort((x, y) =>
     x.currentOrder > y.currentOrder
       ? 1
       : x.currentOrder < y.currentOrder
       ? -1
-      : 0
-  );
-  console.log(orderedArray);
-});
+      : 0,
+  )
+})
 
 // BUBBLE SORT
 
-const sortButton = document.querySelector('[data-button="sort"]');
+const sortButton = document.querySelector('[data-button="sort"]')
 
-function waitforme(ms) {
+function iterationDelay(delay) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve("");
-    }, ms);
-  });
+      resolve('')
+    }, delay)
+  })
 }
 
 async function bubbleSort() {
-  for (let i = 0; i < orderedArray.length - 1; i++) {
-    for (let j = 0; j < orderedArray.length - 1 - i; j++) {
-      //while if, tak do {razeni currentorder a DOMElement}???
-      if (orderedArray[j].value > orderedArray[j + 1].value) {
-        [orderedArray[j], orderedArray[j + 1]] = [
-          orderedArray[j + 1],
-          orderedArray[j],
-        ];
+  sortingArray.slice()
 
-        // orderedArray[j].DOMElement.style.grjdColumn = `${
-        //   orderedArray[j + 1].id
-        // }`;
-        // orderedArray[
-        //   j + 1
-        // ].DOMElement.style.gridColumn = `${orderedArray[i].id}`;
+  console.log(sortingArray.slice())
+  for (let i = 0; i < sortingArray.length - 1; i++) {
+    for (let j = 0; j < sortingArray.length - 1 - i; j++) {
+      if (sortingArray[j].value > sortingArray[j + 1].value) {
+        ;[sortingArray[j], sortingArray[j + 1]] = [
+          sortingArray[j + 1],
+          sortingArray[j],
+        ]
+        ;[sortingArray[j].currentOrder, sortingArray[j + 1].currentOrder] = [
+          sortingArray[j + 1].currentOrder,
+          sortingArray[j].currentOrder,
+        ]
+
+        sortingArray[j].DOMElement.style.gridColumn =
+          sortingArray[j].currentOrder
+        sortingArray[j + 1].DOMElement.style.gridColumn =
+          sortingArray[j + 1].currentOrder
       }
-      await waitforme(2000);
-      console.log(i);
+      await iterationDelay(1000)
     }
   }
 }
 
-sortButton.addEventListener("click", () => {
-  //   orderedArray = orderedArray.sort((x, y) =>
-  //     x.currentOrder > y.currentOrder
-  //       ? 1
-  //       : x.currentOrder < y.currentOrder
-  //       ? -1
-  //       : 0
-  //   );
-  console.log(orderedArray);
-
-  bubbleSort();
-});
+sortButton.addEventListener('click', () => {
+  bubbleSort()
+})
