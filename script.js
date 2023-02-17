@@ -1,5 +1,12 @@
 const mainContainer = document.getElementById('app')
 
+// DEV ALERT - TEMP!
+window.addEventListener('load', () => {
+  if (window.innerWidth < 600) {
+    alert('DEV version - for best experience, open on larger screen =)')
+  }
+})
+
 // Buttons HTML
 const buttonArray = ['mix', 'sort', 'reset']
 const buttonEls = buttonArray
