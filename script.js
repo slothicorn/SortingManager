@@ -7,6 +7,12 @@ window.addEventListener('load', () => {
   }
 })
 
+window.addEventListener('resize', () => {
+  if (window.innerWidth < 600) {
+    alert('DEV version - for best experience, open on larger screen =)')
+  }
+})
+
 // Buttons HTML
 const buttonArray = ['mix', 'sort', 'reset']
 const buttonEls = buttonArray
